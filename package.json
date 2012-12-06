@@ -1,5 +1,5 @@
 {
-  "name": "application-name",
+  "name": "slosilo",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -16,5 +16,14 @@
   "devDependencies": {
     "superagent": "~0.10.0",
     "mocha": "~1.7.3"
-  }
+  },
+  "main": "server",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:revington/slosilo.git"
+  },
+  "author": "Pedro Narciso García Revington",
+  "license": "GPL2",
+  "readmeFilename": "README.md",
+  "description": ""
 }
