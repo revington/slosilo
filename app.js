@@ -29,3 +29,6 @@ app.configure('development', function () {
 });
 app.get('/', routes.index);
 app.get('/users', user.list);
+app.get('/availability', function(req, res, next){
+	res.render('availability',{title: ''});
+});
