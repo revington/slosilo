@@ -1,0 +1,52 @@
+extends layout
+block content
+	header#register.jumbotron.subhead
+		.container
+			h1 Use Ŝlosilo for free!
+			p.lead During beta unlimited and free accounts!
+	.container
+		.row-fluid
+			.span6
+				h1 Our plans
+				p * during beta phase
+				table.table
+					thead
+						tr
+							th
+							th Beta
+					tbody
+						tr
+							th Public cutoffs
+							td unlimited
+						tr
+							th Private cutoffs
+							td unlimited
+						tr
+							th Subscribers
+							td unlimited
+						tr
+							th Price
+							td free!
+			.span6
+				form.form-horizontal(action='/register', method='post')
+					fieldset
+						legend Register for your beta plan 
+						.control-group
+							label.control-label(for='name') Name
+							.controls
+								input(type='text', name='name' )
+						.control-group
+							label.control-label(for='surname') Surname
+							.controls
+								input(type='text', name='surname' )
+						.control-group
+							label.control-label(for='email') Email
+							.controls
+								input(type='text', name='email')
+						.control-group
+							label.control-label(for='password') Password
+							.controls
+								input(type='password', name='password')
+						.form-actions
+							input.btn.btn-primary(type="submit", value="Register") Register
+
