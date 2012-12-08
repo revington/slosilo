@@ -11,7 +11,8 @@
     "node-uuid": "~1.4.0",
     "twitter-bootstrap": "~2.1.1",
     "cradle": "~0.6.4",
-    "txn": "~0.2.10"
+    "txn": "~0.2.10",
+    "bcrypt": "~0.7.3"
   },
   "devDependencies": {
     "superagent": "~0.10.0",
