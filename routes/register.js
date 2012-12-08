@@ -4,20 +4,15 @@ function expose(req, res, next) {
     next();
 }
 var pushMessage = function (req, type, foreword, text) {
-  if (!req.session.messages) {
-      req.session.messages = [];
-  }
-  req.session.messages.push({
-      type: type,
-      foreword: foreword,
-      text: text
-  });
-};
-var flushMessages = function (req) {
-  var ret = req.session.messages;
-  delete req.session.messages;
-  return ret;
-};
+        if (!req.session.messages) {
+            req.session.messages = [];
+        }
+        req.session.messages.push({
+            type: type,
+            foreword: foreword,
+            text: text
+        });
+    };
 
 function loadUserFromForm(req, res, next) {
     req.user = {
@@ -87,7 +82,6 @@ exports.create = [expose, loadUserFromForm, validateNewUser, checkEmailIsInUse, 
 }];
 exports.view = function (req, res) {
     res.render('register', {
-        title: 'Register',
-        messages: flushMessages(req)
+        title: 'Register'
     });
 };

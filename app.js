@@ -22,17 +22,9 @@ app.configure(function () {
     app.use(express.cookieParser('your secret here'));
     app.use(express.session());
     app.use(function (req, res, next) {
-        var err = req.session.error,
-            msg = req.session.success;
-        delete req.session.error;
-        delete req.session.success;
-        res.locals.message = '';
-        if (err) {
-            res.locals.messages = err;
-        }
-        if (msg) {
-            res.locals.messages = msg;
-        }
+        var msg = req.session.messages;
+        delete req.session.messages;
+        res.locals.messages = msg;
         next();
     });
     app.use(express.static(path.join(__dirname, 'public')));
