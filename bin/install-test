@@ -1,0 +1,6 @@
+#!/usr/local/bin/node
+var conf = require('../couch-test-conf');
+var createDB = require('../init-database');
+createDB(conf);
+console.dir(conf);
+console.log('db created');
