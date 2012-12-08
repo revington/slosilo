@@ -32,6 +32,6 @@ app.get('/users', user.list);
 app.get('/availability', function(req, res, next){
 	res.render('availability',{title: ''});
 });
-app.get('register', function(req,res, next){
+app.get('/register', function(req,res, next){
 	res.render('register');
 });
