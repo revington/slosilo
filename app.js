@@ -10,21 +10,6 @@ var express = require('express'),
     cradle = require('cradle'),
     conf = null,
     app = module.exports = express();
-var pushMessage = function (req, type, foreword, text) {
-        if (!req.messages) {
-            req.messages = [];
-        }
-        req.messages.push({
-            type: type,
-            foreword: foreword,
-            text: text
-        });
-    };
-var flushMessages = function (req) {
-        var ret = req.messages;
-        delete req.messages;
-        return ret;
-    };
 app.configure(function () {
     app.set('slosilo', slosilo);
     app.set('port', process.env.PORT || 3000);
