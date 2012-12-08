@@ -48,3 +48,19 @@ app.get('/availability', function (req, res, next) {
 });
 app.get('/register', routes.register.view);
 app.post('/register', routes.register.create);
+
+function Unauthorized(msg) {
+    this.name = 'Unauthorized';
+    Error.call(this, msg);
+    Error.captureStackTrace(this, arguments.callee);
+}
+Unauthorized.prototype.__proto__ = Error.prototype;
+
+function auth(req, res, next) {
+    if (req.session.user) {
+        next();
+    } else {
+        next(new Unauthorized('Unauthorized'));
+    }
+}
+app.get('/dashboard', auth, routes.dashboard);
