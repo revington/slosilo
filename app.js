@@ -33,5 +33,5 @@ app.get('/availability', function(req, res, next){
 	res.render('availability',{title: ''});
 });
 app.get('/register', function(req,res, next){
-	res.render('register');
+	res.render('register', {title: 'Register'});
 });
