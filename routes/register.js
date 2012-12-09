@@ -66,19 +66,21 @@ function hashPassword(req, res, next) {
         return next(err);
     }
 }
-exports.create = [expose, loadUserFromForm, validateNewUser, checkEmailIsInUse, hashPassword, function (req, res) {
-    var successMsg = req.db.save(req.user, function (err, doc) {
-        console.log(arguments);
+
+function saveUser(req, res, next) {
+    req.db.save(req.user, function (err, doc) {
         if (err) {
             console.error(err);
             return next(error);
-        } else {
-            console.log(doc);
-            // TODO:emit notifications (send email and the like
-            pushMessage(req, 'success', 'Welcome!', req.user.name + ' your account has been created');
-            res.redirect('/dashboard');
         }
+        req.user._id = doc.id;
+        next();
     });
+}
+exports.create = [expose, loadUserFromForm, validateNewUser, checkEmailIsInUse, hashPassword, saveUser, function (req, res) {
+    req.session.user = req.user;
+    pushMessage(req, 'success', 'Welcome!', req.user.name + ' your account has been created');
+    res.redirect('/dashboard');
 }];
 exports.view = function (req, res) {
     res.render('register', {
