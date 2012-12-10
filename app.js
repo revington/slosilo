@@ -9,7 +9,18 @@ var express = require('express'),
     slosilo = new Slosilo(),
     cradle = require('cradle'),
     conf = null,
+    req = http.IncomingMessage.prototype,
     app = module.exports = express();
+req.pushMessage = function (type, foreword, text) {
+    if (!this.session.messages) {
+        this.session.messages = [];
+    }
+    this.session.messages.push({
+        type: type,
+        foreword: foreword,
+        text: text
+    });
+};
 app.configure(function () {
     app.set('slosilo', slosilo);
     app.set('port', process.env.PORT || 3000);
@@ -40,27 +51,37 @@ app.configure('development', function () {
     conf = app.get('conf');
     app.set('db', new cradle.Connection(conf.url, conf.port, conf.options).database(conf.database));
 });
+// ==========================
+// Public
+// ==========================
 app.get('/', routes.index);
 app.get('/availability', function (req, res, next) {
     res.render('availability', {
         title: ''
     });
 });
+// register
 app.get('/register', routes.register.view);
 app.post('/register', routes.register.create);
+// login + logout
+app.get('/login', routes.login.view);
+app.post('/login', routes.login.login);
+app.all('/logout', function (req, res) {
+    req.session.destroy(function () {
+        res.redirect('/');
+    });
+});
+// ==========================
+// Only members
+// ==========================
 
-function Unauthorized(msg) {
-    this.name = 'Unauthorized';
-    Error.call(this, msg);
-    Error.captureStackTrace(this, arguments.callee);
-}
-Unauthorized.prototype.__proto__ = Error.prototype;
-
-function auth(req, res, next) {
+function restrict(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        next(new Unauthorized('Unauthorized'));
+        req.session.error = 'Access denied';
+        req.pushMessage( 'error', 'Access denied', 'Log in');
+        res.redirect('/login');
     }
 }
-app.get('/dashboard', auth, routes.dashboard);
+app.get('/dashboard', restrict, routes.dashboard);

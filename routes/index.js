@@ -9,3 +9,4 @@ exports.dashboard = function (req, res) {
     });
 };
 exports.register = require('./register');
+exports.login = require('./login');

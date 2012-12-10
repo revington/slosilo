@@ -29,14 +29,7 @@ block content
 							td free!
 			.span6
 				.section
-					- if (locals.messages)
-						br
-						- locals.messages.forEach(function(msg){
-							div(class="alert alert-#{msg.type}") 
-								- if (msg.foreword)
-									h4= msg.foreword
-								|#{msg.text}
-						- })
+					include partials/messages
 				form.form-horizontal(action='/register', method='post')
 					fieldset
 						legend Register for your beta plan 

@@ -3,16 +3,6 @@ function expose(req, res, next) {
     req.slosilo = req.app.get('slosilo');
     next();
 }
-var pushMessage = function (req, type, foreword, text) {
-        if (!req.session.messages) {
-            req.session.messages = [];
-        }
-        req.session.messages.push({
-            type: type,
-            foreword: foreword,
-            text: text
-        });
-    };
 
 function loadUserFromForm(req, res, next) {
     req.user = {
@@ -33,7 +23,7 @@ function validateNewUser(req, res, next) {
             return next(err);
         }
         if (msg && msg.length) {
-            pushMessage(req, 'error', 'error', msg.join(', '));
+            req.pushMessage('error', 'error', msg.join(', '));
             return res.redirect('/register');
         }
         next();
@@ -50,7 +40,7 @@ function checkEmailIsInUse(req, res, next) {
             return next(err);
         }
         if (users && users.length) {
-            pushMessage(req, 'error', 'error', 'email address already in use');
+            req.pushMessage('error', 'error', 'email address already in use');
             return res.redirect('/register');
         }
         next();
@@ -79,7 +69,7 @@ function saveUser(req, res, next) {
 }
 exports.create = [expose, loadUserFromForm, validateNewUser, checkEmailIsInUse, hashPassword, saveUser, function (req, res) {
     req.session.user = req.user;
-    pushMessage(req, 'success', 'Welcome!', req.user.name + ' your account has been created');
+    req.pushMessage('success', 'Welcome!', req.user.name + ' your account has been created');
     res.redirect('/dashboard');
 }];
 exports.view = function (req, res) {
