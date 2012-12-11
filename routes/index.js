@@ -10,6 +10,7 @@ exports.dashboard = function (req, res) {
 };
 exports.register = require('./register');
 exports.login = require('./login');
+// new project
 exports.newProject = function (req, res) {
     res.render('new', {
         title: '*New project*'
