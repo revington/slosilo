@@ -85,3 +85,4 @@ function restrict(req, res, next) {
     }
 }
 app.get('/dashboard', restrict, routes.dashboard);
+app.get('/new', restrict, routes.newProject);
