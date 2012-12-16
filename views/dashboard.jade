@@ -1,7 +1,28 @@
 extends layout
 block content
 	header#register.jumbotron.subhead
-		.container
+		.container-fluid
 			h1 Dashboard
 				small bla bla
-	.container
+	.container-fluid
+		include partials/messages
+		.row-fluid
+			a.btn.btn-success.pull-right(href='/new') Make cutoffs
+		.row-fluid
+		- if (locals.projects)
+			br
+			- locals.projects.forEach(function(item){
+				.row-fluid
+					h3 
+						a(href="/project/#{item._id}") #{item.name}
+						small #{item.description}
+					hr
+			- })
+			-if(!locals.projects.length)
+				.hero-unit
+					h1 Still no projects?
+					p bla bla
+					p
+						a.btn.btn-success(href="/new") Make my firtst
+			
+

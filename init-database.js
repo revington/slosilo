@@ -26,6 +26,15 @@ module.exports = function (conf, docs, cb) {
                     }
                 }
             });
+            db.save('_design/projects', {
+                byUser: {
+                    map: function (doc) {
+                        if (doc.type === 'project') {
+                            emit(doc.owner, doc._id);
+                        }
+                    }
+                }
+            });
             if (docs) {
                 db.save(docs, cb);
             } else if (cb) {

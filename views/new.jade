@@ -1,0 +1,27 @@
+extends layout
+block content
+	header#register.jumbotron.subhead
+		.container-fluid
+			h1 New project
+				small something exciting here
+	.container-fluid
+		include partials/messages
+		form.form-horizontal(method='POST')
+			.control-group
+				label.control-label Project name
+					.controls
+						input.input-medium(name='name', type='text', placeholder='Project name…')
+			.control-group
+				label.control-label Short description
+					.controls
+						input.input-xxlarge(name='description', type='text', placeholder='optional description')
+			.control-group
+				.controls
+					label.radio Public
+						input(type='radio', name='ispublic', value='true', checked='checked')
+						span.help-block Anyone can see this project. You choose who can commit.
+					label.radio Private
+						input(type='radio', name='ispublic', value='false')
+						span.help-block You choose who can see and commit to this project. 
+			hr
+			button.btn.btn-success.btn-large(type='submit') Create project
