@@ -93,3 +93,5 @@ function restrict(req, res, next) {
 app.get('/dashboard', restrict, routes.dashboard);
 app.get('/new', restrict, routes.viewNewProject);
 app.post('/new', restrict, routes.makeNewProject);
+app.get('/project/:uuid', restrict, routes.project.view);
+app.post('/project/:uuid', restrict, routes.project.update);
