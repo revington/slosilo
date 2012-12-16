@@ -1,8 +1,3 @@
-function expose(req, res, next) {
-    req.db = req.app.get('db');
-    req.slosilo = req.app.get('slosilo');
-    next();
-}
 exports.index = function (req, res) {
     res.render('index', {
         title: 'Express'
@@ -10,21 +5,19 @@ exports.index = function (req, res) {
 };
 
 function loadUserProjects(req, res, next) {
-    req.db.view('projects/byUser', {
-      key: req.session.user._id,
-			include_docs: true
+    req.app.get('db').view('projects/byUser', {
+        key: req.session.user._id,
+        include_docs: true
     }, function (err, col) {
         if (err) {
             console.error(err);
             return next(err);
         }
-				console.log('----');
         res.locals.projects = col;
-				console.log(res.locals.projects);
         return next();
     });
 }
-exports.dashboard = [expose,loadUserProjects, function (req, res) {
+exports.dashboard = [loadUserProjects, function (req, res) {
     res.render('dashboard', {
         title: 'Dashboard'
     });
@@ -37,8 +30,8 @@ exports.viewNewProject = function (req, res) {
         title: '*New project*'
     });
 };
-exports.makeNewProject = [expose, function (req, res) {
-    req.db.save({
+exports.makeNewProject = [function (req, res) {
+    req.app.get('db').save({
         type: 'project',
         created_at: new Date().getTime(),
         owner: req.session.user._id,

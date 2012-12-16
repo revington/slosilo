@@ -1,9 +1,3 @@
-function expose(req, res, next) {
-    req.db = req.app.get('db');
-    req.slosilo = req.app.get('slosilo');
-    next();
-}
-
 function loadUserFromForm(req, res, next) {
     req.user = {
         type: 'user',
@@ -17,7 +11,7 @@ function loadUserFromForm(req, res, next) {
 }
 
 function validateNewUser(req, res, next) {
-    req.slosilo.validateNewUser(req.user, function (err, msg) {
+    req.app.get('slosilo').validateNewUser(req.user, function (err, msg) {
         if (err) {
             console.error(err);
             return next(err);
@@ -31,7 +25,7 @@ function validateNewUser(req, res, next) {
 }
 
 function checkEmailIsInUse(req, res, next) {
-    req.db.view('users/byEmail', {
+    req.app.get('db').view('users/byEmail', {
         key: req.user.email
     }, function (err, users) {
         console.log(users);
@@ -49,7 +43,7 @@ function checkEmailIsInUse(req, res, next) {
 
 function hashPassword(req, res, next) {
     try {
-        req.user.hashedPassword = req.slosilo.hashPassword(req.body.password);
+        req.user.hashedPassword = req.app.get('slosilo').hashPassword(req.body.password);
         return next();
     } catch (err) {
         console.error(err);
@@ -58,7 +52,7 @@ function hashPassword(req, res, next) {
 }
 
 function saveUser(req, res, next) {
-    req.db.save(req.user, function (err, doc) {
+    req.app.get('db').save(req.user, function (err, doc) {
         if (err) {
             console.error(err);
             return next(error);
@@ -67,7 +61,7 @@ function saveUser(req, res, next) {
         next();
     });
 }
-exports.create = [expose, loadUserFromForm, validateNewUser, checkEmailIsInUse, hashPassword, saveUser, function (req, res) {
+exports.create = [loadUserFromForm, validateNewUser, checkEmailIsInUse, hashPassword, saveUser, function (req, res) {
     req.session.user = req.user;
     req.pushMessage('success', 'Welcome!', req.user.name + ' your account has been created');
     res.redirect('/dashboard');

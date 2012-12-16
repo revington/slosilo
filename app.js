@@ -38,6 +38,12 @@ app.configure(function () {
         res.locals.messages = msg;
         next();
     });
+		app.use(function(req, res, next){
+    req.db = req.app.get('db');
+    req.slosilo = req.app.get('slosilo');
+    next();
+
+		});
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(app.router);
 });
