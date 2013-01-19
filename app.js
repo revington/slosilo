@@ -38,12 +38,11 @@ app.configure(function () {
         res.locals.messages = msg;
         next();
     });
-		app.use(function(req, res, next){
-    req.db = req.app.get('db');
-    req.slosilo = req.app.get('slosilo');
-    next();
-
-		});
+    app.use(function (req, res, next) {
+        req.db = req.app.get('db');
+        req.slosilo = req.app.get('slosilo');
+        next();
+    });
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(app.router);
 });
@@ -56,6 +55,9 @@ app.configure('development', function () {
     app.set('conf', require('./couch-test-conf'));
     conf = app.get('conf');
     app.set('db', new cradle.Connection(conf.url, conf.port, conf.options).database(conf.database));
+    app.set('view options', {
+        debug: true
+    });
 });
 // ==========================
 // Public
@@ -86,7 +88,7 @@ function restrict(req, res, next) {
         next();
     } else {
         req.session.error = 'Access denied';
-        req.pushMessage( 'error', 'Access denied', 'Log in');
+        req.pushMessage('error', 'Access denied', 'Log in');
         res.redirect('/login');
     }
 }
