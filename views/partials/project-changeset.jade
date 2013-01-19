@@ -1,0 +1,35 @@
+a.btn.btn-success(data-bind="click: addChange") New Change
+h3 Change history
+table.table
+	thead
+		tr
+			th From
+			th To
+			th Status
+			th Action
+	tbody(data-bind="template: {name: template, foreach:changes}")
+script(type="text/html", id="change-view")
+	tr
+		td(data-bind="text: computedFrom")
+		td(data-bind="text: computedTo")
+		td(data-bind="text: $root.computedState($data.value())")
+		td 
+			ul
+				li
+					a(data-bind="click: edit") edit
+				li 
+					a(data-bind="click: remove") delete
+script(type="text/html", id="change-edit")
+	tr
+		td
+			input.input-mini(type='text', data-bind='datepicker: computedFrom')
+		td
+			input.input-mini(type='text', data-bind='datepicker: computedTo')
+		td
+			select.span12(data-bind="options: $root.posibleStates, optionsValue: 'value', optionsText: 'name', value: value, optionsCaption: 'Choose...'")
+		td 
+			ul
+				li
+					a(data-bind="click: commitChanges") done
+				li 
+					a(data-bind="click: rollbackChanges") undo

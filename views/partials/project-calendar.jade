@@ -1,0 +1,16 @@
+.row-fluid(data-bind="foreach: calendar")
+	section
+		.page-header
+			h3(data-bind="text: time.getFullYear() + '-' + (time.getMonth() + 1)")  
+		.row-fluid
+			// cdeb8b
+			// ff0084
+			div(style="display:table; width:100%")
+				div(style="display:table-row",data-bind="foreach: days")
+					//ko if: $index() < 15
+					span(style="display: table-cell",data-bind="text:  date.getDate()")
+					///ko
+				div(style="display: table-row",data-bind="foreach: days")
+					//ko if: $index() >14 
+					span(style="display: table-cell",data-bind="text:  date.getDate()")
+					///ko
