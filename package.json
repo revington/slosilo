@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "superagent": "~0.10.0",
-    "mocha": "~1.7.3"
+    "mocha": "~1.7.3",
+    "debug": "~0.7.0"
   },
   "main": "server",
   "repository": {
