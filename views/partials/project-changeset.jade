@@ -1,5 +1,4 @@
 a.btn.btn-success(data-bind="click: addChange") New Change
-h3 Change history
 table.table
 	thead
 		tr
@@ -14,7 +13,7 @@ script(type="text/html", id="change-view")
 		td(data-bind="text: computedTo")
 		td(data-bind="text: $root.computedState($data.value())")
 		td 
-			ul
+			ul.unstyled
 				li
 					a(data-bind="click: edit") edit
 				li 
@@ -28,7 +27,7 @@ script(type="text/html", id="change-edit")
 		td
 			select.span12(data-bind="options: $root.posibleStates, optionsValue: 'value', optionsText: 'name', value: value, optionsCaption: 'Choose...'")
 		td 
-			ul
+			ul.unstyled
 				li
 					a(data-bind="click: commitChanges") done
 				li 
