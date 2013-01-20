@@ -1,3 +1,9 @@
+style
+	.status0{background-color: white}
+	.statusundefined{background-color: white}
+	.status1{background-color: #cdeb8b}
+	.status2{background-color: #ff0084}
+	.status3{background-color: #c79810}
 .row-fluid(data-bind="foreach: calendar")
 	section
 		.page-header
@@ -8,9 +14,9 @@
 			div(style="display:table; width:100%")
 				div(style="display:table-row",data-bind="foreach: days")
 					//ko if: $index() < 15
-					span(style="display: table-cell",data-bind="text:  date.getDate()")
+					span(style="display: table-cell",data-bind="attr: {class :  'status'+$data.value },text:  date.getDate()")
 					///ko
-				div(style="display: table-row",data-bind="foreach: days")
-					//ko if: $index() >14 
-					span(style="display: table-cell",data-bind="text:  date.getDate()")
+				div(style="display:table-row",data-bind="foreach: days")
+					//ko if: $index() > 14
+					span(style="display: table-cell",data-bind="attr: {class :  'status'+$data.value},text:  date.getDate()")
 					///ko

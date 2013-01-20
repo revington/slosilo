@@ -11,7 +11,7 @@
                         return c.value();
                     }
                 }
-                return -1;
+                return 0;
             };
         },
         groupByMonth: function (items) {
