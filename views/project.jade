@@ -1,7 +1,9 @@
 extends layout
+block head
+	link(href='/css/flick/jquery-ui-1.10.0.custom.css', rel='stylesheet')
 block scripts
 	script(type="text/javascript", src="/js/inflection.js")
-	script(type="text/javascript", src="/js/jquery-ui-1.9.1.custom.js")
+	script(type="text/javascript", src="/js/jquery-ui-1.10.0.custom.js")
 	script(type="text/javascript", src="/js/slosilo.js")
 	script(type="text/javascript", src="/js/project.js")
 	script(type="text/javascript")
@@ -25,57 +27,25 @@ block content
 		.page-header
 			h1 Availability  
 				small Notify suscriptors about your cutoffs
-			p.lead You are watching/editing availability from April 2013 to October 2013
+			p.lead You are watching/editing availability from&nbsp;
+				span(data-bind="text: $root.monthNames[$root.from().getMonth()]")
+				| &nbsp;
+				span(data-bind="text : selectedYear")
+				| &nbsp;to 
+				span(data-bind="text: $root.monthNames[$root.to().getMonth()]")
+				| &nbsp;
+				span(data-bind="text: (new Date(to())).getFullYear()")
 		//include partials/project-pendant-changes
 		.pagination
 			ul
 				li
-					a &laquo;
-				li.active
-					a 2013
+					select(data-bind="options: fromYearValues,  value: selectedYear")
+				//ko foreach: fromMonthValues
+				li(data-bind="attr : { class : $root.selectedMonth() === $data && 'active'}")
+					a(data-bind="text: text, click: $root.setSelectedMonth")
+				///ko
 				li
-					a 2014
-				li
-					a &raquo;
-				li
-					a J
-				li
-					a F
-				li
-					a M
-				li.active
-					a A
-				li
-					a M
-				li
-					a J
-				li
-					a J
-				li
-					a A
-				li
-					a S
-				li
-					a O
-				li
-					a N
-				li
-					a D
-				li
-					select
-						option full year
-						option 1 month
-						option 2 month
-						option 3 month
-						option 4 month
-						option 5 month
-						option 6 month
-						option 7 month
-						option 8 month
-						option 9 month
-						option 10 month
-						option 11 month
-						option 12 month
+					select(data-bind="options: timeWindow,  value: selectedTimeWindow,  optionsText:'text'")
 		.row-fluid
 			.span6
 		.row-fluid
