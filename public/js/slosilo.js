@@ -240,10 +240,10 @@ var MODELS = (function () {
         };
     }
 
-    function Change(data) {
+    function Change(data, parent) {
         var self = this;
         data = data || {};
-        initHelper(self, data, null, {
+        initHelper(self, data, parent, {
             _id: uuid.v4(),
             type: 'change',
             _deleted: false,
@@ -253,9 +253,7 @@ var MODELS = (function () {
             created_at: undefined,
             created_by: undefined
         }, null);
-        addTransaction(self, {
-            noRemote: true
-        });
+        addTransaction(self);
         self.remove = function (item) {
             item.edit();
             item._deleted(true);
@@ -331,6 +329,8 @@ var MODELS = (function () {
                 return (!item._deleted()) && (typeof item.created_at === 'undefined');
             });
         });
+				addTransaction(self);
+				
     }
     return {
         Attribute: Attribute,

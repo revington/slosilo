@@ -10,6 +10,9 @@ block scripts
 		$(function(){
 			$.getJSON(window.location + '?_=' + new Date().getTime(), function(data){
 			var model = window.model = new MODELS.Project(data);
+			model.resource= function(){
+				return'/project/' + model._id();
+			};
 			MODELS.PROJECT.extendProject(model);
 				ko.applyBindings(model);
 			//	$('#loading').toggle();
@@ -36,6 +39,8 @@ block content
 				| &nbsp;
 				span(data-bind="text: (new Date(to())).getFullYear()")
 		//include partials/project-pendant-changes
+		p.alert.alert-warning(data-bind="visible: currentChanges") you have something to commit
+			span(data-bind="text: currentChanges");
 		.pagination
 			ul
 				li

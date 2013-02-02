@@ -25,3 +25,13 @@ loadProject, function (req, res) {
 module.exports.update = function (req, res) {
     res.redirect('/project/' + req.params.uuid);
 };
+module.exports.collection = {};
+
+function updateCollection(req, res, next) {
+    res.locals.data[req.params.collection] = res.locals.data[req.params.collection] || [];
+    res.locals.data[req.params.collection].push(req.body);
+		next();
+}
+module.exports.collection.update = [loadProject, updateCollection, function (req, res) {
+    res.json(res.locals.data);
+}];
