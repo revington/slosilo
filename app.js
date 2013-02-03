@@ -43,7 +43,7 @@ app.configure(function () {
         req.slosilo = req.app.get('slosilo');
         next();
     });
-    app.use(express.static(path.join(__dirname, 'public')));
+    app.use(express['static'](path.join(__dirname, 'public')));
     app.use(app.router);
 });
 app.configure('development', function () {
@@ -98,3 +98,5 @@ app.post('/new', restrict, routes.makeNewProject);
 app.get('/project/:uuid', restrict, routes.project.view);
 app.post('/project/:uuid', restrict, routes.project.update);
 app.post('/project/:uuid/:collection/:elementID', restrict, routes.project.collection.update);
+app.all('/search', routes.search.index);
+app.get('/typeahead', routes.search.typeahead);

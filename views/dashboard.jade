@@ -6,23 +6,25 @@ block content
 				small bla bla
 	.container-fluid
 		include partials/messages
-		.row-fluid
-			a.btn.btn-success.pull-right(href='/new') Make cutoffs
-		.row-fluid
-		- if (locals.projects)
-			br
-			- locals.projects.forEach(function(item){
-				.row-fluid
-					h3 
-						a(href="/project/#{item._id}") #{item.name}
-						small #{item.description}
-					hr
-			- })
-			-if(!locals.projects.length)
-				.hero-unit
-					h1 Still no projects?
-					p bla bla
-					p
-						a.btn.btn-success(href="/new") Make my firtst
-			
+		.span8
+		.span4
+			.row-fluid
+				a.btn.btn-success.pull-right(href='/new') Make cutoffs
+			.row-fluid
+			- if (locals.projects)
+				br
+				- locals.projects.forEach(function(item){
+					.row-fluid
+						h3 
+							a(href="/project/#{item._id}") #{item.name}
+							small #{item.description}
+						hr
+				- })
+				-if(!locals.projects.length)
+					.hero-unit
+						h1 Still no projects?
+						p bla bla
+						p
+							a.btn.btn-success(href="/new") Make my firtst
+				
 

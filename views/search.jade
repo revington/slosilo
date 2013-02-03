@@ -1,0 +1,23 @@
+extends layout
+block content
+	.container-fluid
+		br
+		br
+		br
+		br
+		.span10.offset1
+			.page-header
+				h1 Search
+					small search over  bla bla
+			
+			form.form-search(method='GET')
+				input.input-xxlarge#slosilo-search(name='q', type="text", placeholder="Search", data-provide="typeahead")
+				button.btn 
+					i.icon-search 
+					|  Search
+		.row-fluid
+		each item in locals.searchResults
+			.media
+				.media-body
+					p(class=item.type)=item.name
+

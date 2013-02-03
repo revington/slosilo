@@ -41,6 +41,9 @@ module.exports = function (conf, docs, cb) {
                 cb();
             }
         };
+				var configureElasticSearch = function(){
+
+				};
     db.exists(function (err, exists) {
         if (err) {
             console.log('error', err);

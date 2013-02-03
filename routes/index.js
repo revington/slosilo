@@ -25,6 +25,7 @@ exports.dashboard = [loadUserProjects, function (req, res) {
 exports.register = require('./register');
 exports.login = require('./login');
 exports.project = require('./project');
+exports.search = require('./search');
 // new project
 exports.viewNewProject = function (req, res) {
     res.render('new', {
